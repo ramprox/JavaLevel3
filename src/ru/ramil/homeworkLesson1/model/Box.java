@@ -1,7 +1,7 @@
-package ru.ramil.homeworkLesson1.service;
+package ru.ramil.homeworkLesson1.model;
 
 import ru.ramil.homeworkLesson1.interfaces.StorageInBox;
-import ru.ramil.homeworkLesson1.model.Fruit;
+
 import java.util.*;
 
 public class Box<T extends Fruit & StorageInBox> {
@@ -10,6 +10,10 @@ public class Box<T extends Fruit & StorageInBox> {
 
     public void add(T t) {
         list.add(t);
+    }
+
+    public void addAll(List<T> list) {
+        this.list.addAll(list);
     }
 
     public float getWeight() {
@@ -34,9 +38,7 @@ public class Box<T extends Fruit & StorageInBox> {
         if(this == otherBox || otherBox == null) {
             return;
         }
-        for(T fruit : list) {
-            otherBox.add(fruit);
-        }
+        otherBox.addAll(list);
         list.clear();
     }
 }

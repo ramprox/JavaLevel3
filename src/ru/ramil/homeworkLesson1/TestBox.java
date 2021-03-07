@@ -1,9 +1,7 @@
 package ru.ramil.homeworkLesson1;
 
 
-import ru.ramil.homeworkLesson1.model.Apple;
-import ru.ramil.homeworkLesson1.model.Orange;
-import ru.ramil.homeworkLesson1.service.Box;
+import ru.ramil.homeworkLesson1.model.*;
 
 public class TestBox {
     public static void main(String[] args) {
