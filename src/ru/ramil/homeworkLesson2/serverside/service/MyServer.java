@@ -6,7 +6,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.*;
 
+/**
+ * класс Сервер
+ */
 public class MyServer {
 
     private final int PORT = 8081;
@@ -20,7 +24,14 @@ public class MyServer {
         return authService;
     }
 
-
+    /**
+     * Конструктор, запускающий сервер
+     * Последовательность запуска сервера:
+     * 1. Создание ServerSocket с портом PORT.
+     * 2. Старт сервиса аутентификации
+     * 3. Ожидание подключения от клиента
+     * 4. После подключения клиента, создается ClientHandler.
+     */
     public MyServer() {
         try (ServerSocket server = new ServerSocket(PORT)) {
             authService = new BaseAuthService();
@@ -34,10 +45,16 @@ public class MyServer {
             }
         } catch (IOException e) {
             System.out.println("Сервер грохнулся");
+        } catch(SQLException ex) {
+            for(Throwable t : ex) {
+                t.printStackTrace();
+            }
+            System.out.println("Соединение с базой данных отсутствует");
         } finally {
             if(authService != null) {
                 authService.stop();
             }
+            DBConnection.closeConnection();
         }
     }
 
@@ -67,6 +84,7 @@ public class MyServer {
         }
         clientHandler.sendMessage(sb.toString());
     }
+
 
     public synchronized void subscribe(ClientHandler client) {
         clients.add(client);
